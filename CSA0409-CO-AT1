@@ -1,1 +1,165 @@
+Q1.
+a) Types of OS can be used are:
+       1.BatchOS is the suitable OS for the above mentioned environment because it allows many users to access a server simultaneosly.
+       2.Multiprocessing OS can also be used in this kind of environment as it enables multiple users access a product simultaneosly.
 
+b) The key responsibilities of Kernel are:
+                      1. Process sheduling
+                      2. Memory protection
+
+c) C-based Psuedocode to create a child process and display the Process IDs of both the parent and child:
+    
+  Start
+    Call fork()
+
+    If fork() < 0
+        Print "Process creation failed"
+
+    Else if fork() == 0
+        // Child process
+        Display Child PID using getpid()
+        Display Parent PID using getppid()
+
+    Else
+        // Parent process
+        Display Parent PID using getpid()
+        Display Child PID returned by fork()
+
+  Stop
+
+Q2.
+a)  To create a file - open().
+    To write or edit a file - write().
+    To retreive from a file - read().
+
+b)  The two important system calls are:
+        1. open() - To open an existing file or to create a new file.
+        2. write() - To perform some operations to the file is done with this system call.
+
+c) A pseudo-code for system call sequence to copy the contents of one file to another.
+
+    Start
+
+       Open/Create "student.txt"
+        If file creation fails
+           Display "Error"
+                Stop
+
+       Write "Student Name" to the file
+
+            Close the file
+
+     Stop
+Q3.
+
+a) open()
+   read()
+   open() (Creating a new file)
+   write()
+   close()
+
+b)  The system calls used are:
+        1. open() - To open an existing file or to create a new file.
+        2. write() - To perform some operations to the file is done with this system call.
+
+c) Pseudo-code for a system call sequence to copy the contents of one file to another.
+
+Start
+
+Open source file (Read mode)
+Create/Open destination file (Write mode)
+
+While data can be read from source file
+    Read data into buffer
+    Write buffer to destination file
+
+Close source file
+Close destination file
+
+Stop
+
+Q4.
+
+(a) Purpose of fork() and exec() System Calls
+        1. fork()
+              Creates a new child process by duplicating the parent process.
+              Returns:
+                  0 in the child process.
+                  Child's PID in the parent process.
+                  -1 if creation fails.
+        2. exec()
+              Replaces the current process with a new program.
+              If successful, the new program starts executing and the old program is replaced.
+
+b) Role of wait() System Call:
+         1.wait() causes the parent process to wait until its child process finishes execution.
+         2.It prevents the creation of zombie processes.
+         3.Returns the Process ID (PID) of the terminated child.
+
+c) 
+
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
+int main()
+{
+    pid_t pid;
+    pid = fork();
+    if (pid < 0){
+        printf("Fork failed.\n");
+    }
+    else if (pid == 0){
+        // Child process
+        printf("Child is executing a new program...\n");
+        execl("/bin/ls", "ls", NULL);
+    }
+    else
+    {
+        // Parent process
+        wait(NULL);
+        printf("Child process completed.\n");
+    }
+ return 0;
+}
+
+Q5.
+
+a) File management is important because it:
+        1.Organizes and stores data efficiently on secondary storage.
+        2.Enables users and programs to create, access, modify, and delete files.
+        3.Provides data security and access control.
+        4.Ensures efficient use of storage space.
+        5.Maintains data integrity and supports file sharing.
+
+b) 1. open()
+      Opens an existing file or creates a new file.
+      Returns a file descriptor that is used for reading, writing, or other file operations.
+2. close()
+      Closes an opened file.
+      Releases the file descriptor and frees system resources.
+
+c) To write a C-based system call sequence to open a file, read its contents, and close it:
+
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+int main()
+{
+    int fd, n;
+    char buffer[100];
+    // Open the file in read-only mode
+    fd = open("student.txt", O_RDONLY);
+    if (fd < 0) {
+        printf("Error opening file.\n");
+        return 1;
+    }
+    // Read the file contents
+    n = read(fd, buffer, sizeof(buffer) - 1);
+    if (n > 0) {
+        buffer[n] = '\0';
+        printf("File Contents:\n%s\n", buffer);
+    }
+    // Close the file
+    close(fd);
+    return 0;
+}
