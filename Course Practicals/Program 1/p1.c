@@ -24,6 +24,5 @@ int main()
         printf("Parent PID : %d\n", getpid());
         printf("Child PID  : %d\n", pid);
     }
-
     return 0;
 }
