@@ -1,0 +1,177 @@
+                                                  CO3 - AT1 - Experiment Questions
+Name: Deepak Kumar A
+Register No.: 192524422
+Date: 06-08-2026
+
+1) Aim: To design and implement the identification of physical address using logical address
+
+   Program:
+          #include <stdio.h>
+
+          int main() {
+                int base, limit, logical;
+
+                // Initialising Base, limit registers and logical address 
+
+                printf("Enter Base Register: ");
+                scanf("%d", &base);
+
+                printf("Enter Limit Register: ");
+                scanf("%d", &limit);
+
+                printf("Enter Logical Address: ");
+                scanf("%d", &logical);
+ 
+                //Condition to check the address is valid or not
+      
+                if (logical < limit) { 
+                  
+                      printf("The physical address is Valid!\n");
+                      printf("Physical Address = %d\n", base + logical);
+                }      
+                else {
+                      printf("Invalid Logical Address!\n");
+                }
+                return 0;
+          }
+
+  Output:
+      Enter Base Register: 1000
+      Enter Limit Register: 500
+      Enter Logical Address: 271
+      The Physical address is Valid!
+      Physical Address = 1271
+
+2) Aim: To design and implement paging memory management
+
+   Program:
+        #include <stdio.h>
+
+        int main() {
+            int n, page, offset, frame;
+            int pageTable[20];
+
+        // Get the number of pages
+            printf("Enter the number of pages: ");
+            scanf("%d", &n);
+    
+        // Read frame numbers for each page
+            printf("Enter frame numbers:\n");
+            for (int i = 0; i < n; i++) {
+                printf("Page %d -> Frame: ", i);
+                scanf("%d", &pageTable[i]);
+            }
+
+        // Read logical address (page number and offset)
+            printf("Enter Page Number and Offset: ");
+            scanf("%d %d", &page, &offset);
+
+        // Check whether the page number is valid
+            if (page >= 0 && page < n) {
+              frame = pageTable[page];
+
+              // Calculate physical address
+              printf("Physical Address = %d\n", frame * 100 + offset);
+              } else {
+                printf("Invalid Page Number!\n");
+              }
+
+              return 0;
+        }
+
+   Output:
+        Enter the number of pages: 2
+        Enter frame numbers:
+        Page 0 -> Frame: 5
+        Page 1 -> Frame: 3
+        Enter Page Number and Offset: 1 50
+        Physical Address = 350
+
+3) Aim: To design and implement page table simulation
+
+   Program:
+        #include <stdio.h>
+
+        int main() {
+            int pageTable[10], n, page;
+
+            //Get the no. of pages
+            printf("Enter number of pages: ");
+            scanf("%d", &n);
+
+            //Get the frame numbers
+            printf("Enter frame numbers:\n");
+            for (int i = 0; i < n; i++)
+                scanf("%d", &pageTable[i]);
+
+            //Page number to find the frame
+            printf("Enter Page Number: ");
+            scanf("%d", &page);
+
+            printf("Page %d -> Frame %d\n", page, pageTable[page]);
+
+            return 0;
+        }
+
+   Output:
+        Enter number of pages: 4
+        Enter frame numbers:
+        3
+        2
+        4
+        1
+        Enter Page Number: 2
+        Page 2 -> Frame 4
+
+4) Aim: To design and implement Translation Lookaside Buffer (TLB)
+   
+   Program: 
+        #include <stdio.h>
+
+        int main() {
+            int memory = 100, tlb = 20;
+            float hit;
+
+            printf("Enter TLB Hit Ratio (0 to 1): ");
+            scanf("%f", &hit);
+
+            printf("Without TLB = %d ns\n", 2 * memory);
+
+            printf("With TLB = %.2f ns\n",
+                    hit * (tlb + memory) +
+                    (1 - hit) * (tlb + 2 * memory));
+
+            return 0;
+        }
+
+   Output:
+        Enter TLB Hit Ratio (0 to 1): 0.8
+        Without TLB = 200 ns
+        With TLB = 140.00 ns
+
+5) Aim: To design and illustrate memory protection using base and limit registers.
+   
+  Program:
+       #include <stdio.h>
+
+        int main() {
+            int limit, address;
+
+            printf("Enter Limit Register: ");
+            scanf("%d", &limit);
+
+            printf("Enter Logical Address: ");
+            scanf("%d", &address);
+
+            if (address >= 0 && address < limit)
+                  printf("Access Allowed\n");
+            else
+                  printf("Access Denied\n");
+
+            return 0;
+        }
+
+  Output:
+      Enter Limit Register: 500
+      Enter Logical Address: 600
+      Access Denied!
