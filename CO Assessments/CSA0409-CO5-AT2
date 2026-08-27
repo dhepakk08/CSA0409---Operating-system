@@ -1,0 +1,206 @@
+                                                            CSA0409-CO5-AT2
+Name: DEEPAK KUMAR A
+Reg. No: 192524422
+Date: 27-08-2026
+
+
+1. File System Space Management Algorithm
+
+PSEUDOCODE:
+
+BEGIN
+
+    SET threshold = 80%
+    SET target_usage = 70%
+
+    WHILE system is running DO
+
+        usage = GET_DISK_USAGE()
+
+        IF usage > threshold THEN
+
+            PRINT "Disk usage exceeded 80%"
+
+            IDENTIFY log_files
+            SORT log_files BY size DESC
+
+            FOR each file IN log_files DO
+
+                IF file is suitable for compression THEN
+                    COMPRESS file
+                ELSE
+                    DELETE file
+                ENDIF
+
+                usage = GET_DISK_USAGE()
+
+                IF usage <= target_usage THEN
+                    BREAK
+                ENDIF
+
+            ENDFOR
+
+            IF usage > threshold THEN
+                PRINT "Warning: Disk usage is still critical"
+            ENDIF
+
+        ENDIF
+
+        WAIT for monitoring interval
+
+    ENDWHILE
+
+END
+
+2. Priority-Based CPU Scheduling Algorithm
+
+PSEUDOCODE:
+
+BEGIN
+
+    INPUT process_list
+
+    FOR each process IN process_list DO
+        INPUT process.priority
+        INPUT process.burst_time
+    ENDFOR
+
+    WHILE process_list NOT EMPTY DO
+
+        SORT process_list BY priority (highest first)
+
+        SELECT process WITH highest priority
+
+        ALLOCATE CPU time
+
+        EXECUTE process
+
+        REDUCE process.burst_time
+
+        IF process.burst_time <= 0 THEN
+
+            REMOVE process FROM process_list
+            PRINT "Process completed"
+
+        ELSE
+
+            REDUCE priority slightly
+            ADD process back to process_list
+
+        ENDIF
+
+    ENDWHILE
+
+END
+
+3. RAM Resource Management for Multiple Virtual Machines
+
+PSEUDOCODE:
+
+BEGIN
+
+    total_RAM = 16 GB
+    host_reserved = 4 GB
+
+    available_RAM = total_RAM - host_reserved
+
+    INPUT number_of_VMs
+
+    SET min_RAM = 2 GB
+
+    FOR i = 1 TO number_of_VMs DO
+
+        IF available_RAM >= min_RAM THEN
+
+            ALLOCATE min_RAM TO VM[i]
+
+            available_RAM = available_RAM - min_RAM
+
+            PRINT "RAM allocated to VM", i
+
+        ELSE
+
+            PRINT "Insufficient memory for VM", i
+            BREAK
+
+        ENDIF
+
+    ENDFOR
+
+    PRINT "Remaining available RAM:", available_RAM
+
+END
+
+4. Hypervisor Selection Based on System Requirements
+
+PSEUDOCODE:
+
+BEGIN
+
+    INPUT performance_required
+    INPUT budget
+    INPUT hardware_access
+
+    IF performance_required = HIGH AND hardware_access = TRUE THEN
+
+        selected_hypervisor = "Type 1 Hypervisor"
+
+    ELSE IF performance_required = HIGH AND hardware_access = FALSE THEN
+
+        selected_hypervisor = "Type 2 Hypervisor"
+
+    ELSE IF budget = LOW THEN
+
+        selected_hypervisor = "Type 2 Hypervisor"
+
+    ELSE
+
+        selected_hypervisor = "Type 1 Hypervisor"
+
+    ENDIF
+
+    PRINT "Selected Hypervisor:", selected_hypervisor
+
+END
+
+5. CPU and Memory Resource Limiting Using cgroups
+
+PSEUDOCODE:
+
+BEGIN
+
+    INPUT application_list
+
+    FOR each app IN application_list DO
+
+        CREATE cgroup for app
+
+        INPUT CPU_limit
+        INPUT memory_limit
+
+        SET CPU limit for app
+        SET memory limit for app
+
+        ASSIGN process of app TO cgroup
+
+    ENDFOR
+
+    WHILE system is running DO
+
+        FOR each app IN application_list DO
+
+            usage = MONITOR CPU and memory usage
+
+            IF usage exceeds assigned limit THEN
+
+                ENFORCE cgroup resource limits
+
+                PRINT "Resource limit enforced for", app
+
+            ENDIF
+
+        ENDFOR
+
+    ENDWHILE
+
+END
