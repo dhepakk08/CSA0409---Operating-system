@@ -1,0 +1,98 @@
+                                                  CO2 - AT 3
+Name: Deepak Kumar A
+Register no: 192524422
+Date:31-07-2026
+
+Q1. Deadlock Debugging (10 Marks)
+Deadlock Condition
+Process P1 locks R1.
+Process P2 locks R2.
+P1 requests R2, but it is already locked by P2.
+P2 requests R1, but it is already locked by P1.
+Both processes wait indefinitely for each other.
+This creates a Circular Wait, one of the four necessary conditions for deadlock.
+The deadlock occurs because:
+Mutual Exclusion exists.
+Hold and Wait exists.
+No Preemption exists.
+Circular Wait exists.
+Optimization
+Follow a fixed resource allocation order.
+Example: Both P1 and P2 should always lock R1 first and then R2.
+Alternatively, use try-lock with timeout and release resources if the second lock is unavailable.
+Apply deadlock prevention by breaking the Circular Wait condition.
+This ensures both processes execute without deadlock while keeping the process logic unchanged.
+
+
+Q2. CPU Utilization Problem (10 Marks)
+Cause of Low CPU Utilization
+CPU utilization is only 30%, although processes are available.
+Scheduler log shows repeated transitions:
+Ready → Waiting → Ready → Waiting.
+Processes spend most of their time waiting for I/O.
+The workload is I/O-bound, not CPU-bound.
+CPU remains idle while processes wait for I/O completion.
+Frequent context switches also waste CPU time.
+System-Level Optimization
+Increase the degree of multiprogramming so another process runs during I/O waits.
+Use asynchronous or buffered I/O to reduce waiting time.
+Improve disk performance using SSDs or caching.
+Use an efficient scheduling algorithm that quickly selects ready processes.
+Balance CPU-bound and I/O-bound processes to improve CPU utilization.
+
+
+Q3. Memory Bottleneck Debugging (10 Marks)
+Memory Issue
+Program has:
+Code = 5 MB
+Heap = 150 MB
+Stack = 1 MB per thread
+Threads = 25
+Total stack memory = 25 MB.
+Frequent page faults indicate memory pages are repeatedly moved between RAM and secondary storage.
+Large heap and multiple active threads increase memory accesses.
+Continuous page swapping causes performance degradation.
+This results in increased page fault handling time and reduced execution speed.
+Optimizations
+Reduce heap memory usage by releasing unused objects and avoiding unnecessary allocations.
+Use a thread pool instead of creating many threads.
+Increase physical RAM if possible.
+Improve memory locality to reduce page faults.
+Use efficient memory allocation techniques to minimize fragmentation.
+
+
+Q4. Starvation Debugging (10 Marks)
+Root Cause
+Scheduler uses a Multilevel Queue.
+Queue Priority:
+Q1 – Interactive (Highest)
+Q2 – System
+Q3 – Batch (Lowest)
+Process P5 belongs to Q3.
+Continuous arrival of processes in Q1 and Q2 prevents Q3 from executing.
+Since Q3 follows FCFS, P5 keeps waiting indefinitely.
+This condition is called Starvation (Indefinite Blocking).
+Optimization
+Implement Aging, which gradually increases the priority of long-waiting processes.
+Allocate a fixed percentage of CPU time to Q3.
+Use Multilevel Feedback Queue (MLFQ) instead of a fixed Multilevel Queue.
+Periodically promote waiting batch processes to higher-priority queues.
+These techniques ensure fairness and prevent starvation.
+
+
+Q5. Context-Switch Overhead Debugging (10 Marks)
+Cause
+Server performs 20,000 context switches per second.
+Time quantum = 1 ms.
+Average CPU burst = 2 ms.
+Threads are preempted before completing execution.
+Very frequent I/O operations force processes into waiting state.
+Every preemption and I/O completion causes another context switch.
+CPU spends significant time saving and restoring process states instead of executing tasks.
+This increases scheduling overhead and reduces system performance.
+Optimizations
+Increase the time quantum (e.g., 4–5 ms) to reduce unnecessary preemption.
+Reduce I/O frequency using asynchronous I/O, buffering, or batching.
+Optimize thread scheduling to minimize excessive switching.
+Reduce the number of active threads using thread pools.
+Balance CPU-bound and I/O-bound workloads to improve overall efficiency.

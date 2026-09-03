@@ -1,0 +1,186 @@
+
+                                                CO1-AT1 - SHORT ANSWER TEST
+
+Name: Deepak Kumar A
+Register Number: 192524422
+Date: 16-07-2026
+
+Q1)
+(a) Type of Operating System suitable:
+
+A Multi-user Time-Sharing Operating System is most suitable for this environment because it allows multiple users to use the same computer system at the same time. The CPU time is shared among users, providing quick response and efficient resource utilization.
+
+(b) Two Responsibilities of the Kernel
+
+1.Process Management
+Creates, schedules, and terminates processes.
+Allocates CPU time to each process for efficient execution.
+
+2.Memory Management
+Allocates and deallocates memory for running programs.
+Protects the memory space of each process from unauthorized access.
+
+(c) C System Call Sequence
+#include <stdio.h>
+#include <unistd.h>
+
+int main() {
+    pid_t pid = fork();
+
+    if (pid == 0) {
+        printf("Child Process\n");
+        printf("PID = %d\n", getpid());
+        printf("Parent PID = %d\n", getppid());
+    } else {
+        printf("Parent Process\n");
+        printf("PID = %d\n", getpid());
+        printf("Child PID = %d\n", pid);
+    }
+
+    return 0;
+}
+
+
+Q2)
+(a) System Calls Used for File Operations
+open()/creat() – Creates or opens a file.
+write() – Writes data into a file.
+read() – Reads data from a file.
+close() – Closes the file after use.
+
+(b) Purpose of Any Two File Management System Calls
+open()
+Opens an existing file or creates a new file.
+Returns a file descriptor used for file operations.
+
+write()
+Writes data from the program into a file.
+Returns the number of bytes written.
+
+(c) C System Call Sequence
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+int main() {
+    int fd = open("student.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+
+    write(fd, "John\n", 5);
+
+    close(fd);
+
+    return 0;
+}
+
+
+Q3)
+(a) System Calls Required
+
+The following system calls are required to copy the contents of one file to another:
+open()
+read()
+write()
+close()
+
+(b) Purpose of Any Two System Calls
+
+read()
+Reads data from the source file into a buffer.
+
+write()
+Writes the data stored in the buffer into the destination file.
+
+(c) C System Call Sequence
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+int main() {
+    int src = open("source.txt", O_RDONLY);
+    int dest = open("dest.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+
+    char buffer[100];
+    int n;
+
+    while ((n = read(src, buffer, sizeof(buffer))) > 0) {
+        write(dest, buffer, n);
+    }
+
+    close(src);
+    close(dest);
+
+    return 0;
+}
+
+
+Q4)
+(a) Purpose of fork() and exec()
+
+fork()
+Creates a new child process by duplicating the parent process.
+
+exec()
+Replaces the current process with a new program.
+The process ID remains the same after exec().
+
+(b) Role of wait()
+
+The wait() system call makes the parent process wait until the child process completes its execution. It also helps prevent dead  processes by collecting the child's exit status.
+
+(c) C System Call Sequence
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main() {
+    pid_t pid = fork();
+
+    if (pid == 0) {
+        execl("/bin/ls", "ls", NULL);
+    } else {
+        wait(NULL);
+        printf("Child process completed.\n");
+    }
+
+    return 0;
+}
+
+
+Q5)
+(a) Importance of File Management
+
+File management is important because it helps the operating system to:
+
+Store files in an organized manner.
+Create, delete, rename, and modify files.
+Control user access through permissions.
+Retrieve files quickly and efficiently.
+Protect data from unauthorized access and accidental loss.
+
+(b) Purpose of open() and close()
+
+open()
+Opens a file for reading, writing, or both.
+Returns a file descriptor for further file operations.
+
+close()
+Closes an opened file.
+Releases the file descriptor.
+
+(c) C System Call Sequence
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+int main() {
+    int fd = open("student.txt", O_RDONLY);
+
+    char buffer[100];
+    int n = read(fd, buffer, sizeof(buffer));
+
+    write(1, buffer, n);
+
+    close(fd);
+
+    return 0;
+}
